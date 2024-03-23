@@ -115,8 +115,8 @@ pub fn handle(ctx: Context<Withdraw>) -> Result<()> {
         .checked_sub(1)
         .unwrap();
 
-    // transfer stake amount to pool
-    let bump = ctx.bumps.get("global_state").unwrap();
+    // transfer stake amount to pool    
+    let bump = ctx.bumps.get("global_state").unwrap();    
 
     // global_state is owner of pool account, so it's seeds should be signer
     token::transfer(
