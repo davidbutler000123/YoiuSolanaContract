@@ -8,7 +8,7 @@ skip-lint = false
 escrow = "8FcfefZgB9dcWPcAo6n3tx494SfjZ2dd4gPyv25w2E3d"
 
 [registry]
-url = "https://api.apr.dev"
+url = "http://127.0.0.1"
 
 [provider]
 cluster = "Localnet"

@@ -11,9 +11,9 @@ import {
 } from "@solana/spl-token";
 
 import {
+  getDaoTreasuryKey,
   getGlobalStateKey,
   getPoolKey,
-  getRewardPoolKey,
   getUserDataKey,
 } from "../utils/keys";
 
@@ -107,24 +107,26 @@ export class MintAcc extends BaseAcct {
 export class Accounts {
   public globalState: GlobalStateAccount;
   public pool: PoolTokenAcc;
-  public rewardPool: RewardPoolTokenAcc;
+  public daoTreasury: DaoTreasuryTokenAcc;
   public yoiuTokenMint: MintAcc;
 
   constructor() {
     this.globalState = new GlobalStateAccount();
     this.pool = new PoolTokenAcc();
-    this.rewardPool = new RewardPoolTokenAcc();
+    this.daoTreasury = new DaoTreasuryTokenAcc();
     this.yoiuTokenMint = new MintAcc();
   }
   public async init() {
     await this.globalState.initKey();
     await this.pool.initKey();
-    await this.rewardPool.initKey();
+    await this.daoTreasury.initKey();
   }
 }
 
 export class GlobalStateAccount extends BaseAcct {
   public async getInfo() {
+    console.log('this.publicKey = ' + this.publicKey)
+
     return await program.account.globalState.fetchNullable(this.publicKey);
   }
   public async initKey() {
@@ -138,8 +140,8 @@ export class PoolTokenAcc extends TokenAcc {
   }
 }
 
-export class RewardPoolTokenAcc extends TokenAcc {
+export class DaoTreasuryTokenAcc extends TokenAcc {
   public async initKey() {
-    this.publicKey = await getRewardPoolKey();
+    this.publicKey = await getDaoTreasuryKey();
   }
 }

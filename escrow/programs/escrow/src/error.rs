@@ -14,3 +14,9 @@ pub enum StakingError {
     #[msg("Incorrect User State")]
     IncorrectUserState,
 }
+
+#[error_code]
+pub enum WithdrawError {
+    #[msg("The lock period has not been met.")]
+    LockPeriodNotMet,
+}

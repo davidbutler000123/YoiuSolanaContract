@@ -12,9 +12,11 @@ pub struct Stake<'info> {
     pub user: Signer<'info>,
 
     #[account(
-        mut,
+        init_if_needed,
         seeds = [GLOBAL_STATE_SEED],
         bump,
+        payer = user,
+        space = 8 + core::mem::size_of::<GlobalState>()
     )]
     pub global_state: Box<Account<'info, GlobalState>>,
 
@@ -26,11 +28,18 @@ pub struct Stake<'info> {
     pub pool: Box<Account<'info, TokenAccount>>,
 
     #[account(
+        mut,
+        seeds = [DAO_TREASURY_SEED],
+        bump
+    )]
+    pub dao_treasury: Box<Account<'info, TokenAccount>>,
+    
+    #[account(
         init_if_needed,
         seeds = [USER_STAKING_DATA_SEED, data_seed.key().as_ref(), user.key().as_ref()],
         bump,
         payer = user,
-        space = core::mem::size_of::<UserData>()
+        space = 8 + core::mem::size_of::<UserData>()
     )]
     pub user_data: Box<Account<'info, UserData>>,
 
@@ -39,7 +48,7 @@ pub struct Stake<'info> {
         seeds = [USER_STATE_SEED, user.key().as_ref()],
         bump,
         payer = user,
-        space = core::mem::size_of::<UserState>()
+        space = 8 + core::mem::size_of::<UserState>()
     )]
     pub user_state: Box<Account<'info, UserState>>,
 
@@ -93,6 +102,16 @@ impl<'info> Stake<'info> {
     }
 }
 
+pub fn decide_tier(amount: u64) -> u8 {
+    match amount {
+        0..=249 => 5,
+        250..=1_499 => 4,
+        1_500..=7_499 => 3,
+        7_500..=19_999 => 2,
+        _ => 1
+    }
+}
+
 #[access_control(ctx.accounts.validate(amount))]
 pub fn handle(ctx: Context<Stake>, amount: u64) -> Result<()> {
     let timestamp = Clock::get()?.unix_timestamp;
@@ -102,7 +121,7 @@ pub fn handle(ctx: Context<Stake>, amount: u64) -> Result<()> {
     // Init staking information in user_data
     accts.user_data.user = accts.user.key();
     accts.user_data.amount = amount;
-    accts.user_data.staked_time = timestamp as u64;
+    accts.user_data.staked_time = timestamp;
     accts.user_data.last_reward_time = timestamp as u64;
     accts.user_data.seed_key = accts.data_seed.key();
 
@@ -121,6 +140,8 @@ pub fn handle(ctx: Context<Stake>, amount: u64) -> Result<()> {
         .total_stake_card
         .checked_add(1)
         .unwrap();
+    
+    accts.user_state.tier = decide_tier(accts.user_state.total_staked_amount);
 
     // global state
     // Update totally staked amount in global_state
@@ -129,7 +150,13 @@ pub fn handle(ctx: Context<Stake>, amount: u64) -> Result<()> {
         .total_staked_amount
         .checked_add(amount)
         .unwrap();
-    
+    // Update totally staked card in global_state
+    accts.global_state.total_stake_card = accts
+        .global_state
+        .total_stake_card
+        .checked_add(1)
+        .unwrap();
+
     // transfer stake amount to pool
     token::transfer(accts.stake_token_context(), amount)?;
 

@@ -14,7 +14,7 @@ pub struct Initialize<'info> {
         seeds = [GLOBAL_STATE_SEED],
         bump,
         payer = authority,
-        space = core::mem::size_of::<GlobalState>()
+        space = 8 + core::mem::size_of::<GlobalState>()
     )]
     pub global_state: Box<Account<'info, GlobalState>>,
 
@@ -27,6 +27,16 @@ pub struct Initialize<'info> {
         payer = authority
     )]
     pub pool: Box<Account<'info, TokenAccount>>,
+
+    #[account(
+        init_if_needed,
+        seeds = [DAO_TREASURY_SEED],
+        bump,
+        token::mint = yoiu_token_mint,
+        token::authority = global_state,
+        payer = authority
+    )]
+    pub dao_treasury: Box<Account<'info, TokenAccount>>,
 
     pub yoiu_token_mint: Box<Account<'info, Mint>>,
 

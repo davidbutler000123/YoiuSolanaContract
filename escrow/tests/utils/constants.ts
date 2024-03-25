@@ -1,6 +1,7 @@
 export const GLOBAL_STATE_SEED = "GLOBAL-STATE-SEED";
 export const USER_STAKING_DATA_SEED = "USER_STAKING_DATA_SEED";
 export const POOL_SEED = "POOL_SEED";
+export const DAO_TREASURY_SEED = "DAO_TREASURY_SEED";
 export const USER_STATE_SEED = "USER_STATE_SEED";
 
 export const YOIU_DECIMALS = 6;

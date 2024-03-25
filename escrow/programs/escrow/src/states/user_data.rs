@@ -13,7 +13,7 @@ pub struct UserData {
     // last claimed time
     pub last_reward_time: u64,
     // staked time
-    pub staked_time: u64,
+    pub staked_time: i64,
     // data seed
     pub seed_key: Pubkey,
 

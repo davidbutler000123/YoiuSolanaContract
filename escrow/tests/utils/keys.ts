@@ -2,9 +2,9 @@ import { PublicKey } from "@solana/web3.js";
 import {
   GLOBAL_STATE_SEED,
   USER_STAKING_DATA_SEED,
-  POOL_SEED,
-  REWARD_POOL_SEED,
+  POOL_SEED,  
   USER_STATE_SEED,
+  DAO_TREASURY_SEED,
 } from "./constants";
 import { asyncGetPda } from "./utils";
 import { getProgram } from "../program";
@@ -26,12 +26,12 @@ export const getPoolKey = async () => {
   return poolKey;
 };
 
-export const getRewardPoolKey = async () => {
-  const [rewardPoolKey] = await asyncGetPda(
-    [Buffer.from(REWARD_POOL_SEED)],
+export const getDaoTreasuryKey = async () => {
+  const [treasuryKey] = await asyncGetPda(
+    [Buffer.from(DAO_TREASURY_SEED)],
     program.programId
   );
-  return rewardPoolKey;
+  return treasuryKey;
 };
 
 export const getUserDataKey = async (

@@ -12,6 +12,7 @@ pub struct UserState {
     // total staked card count
     pub total_stake_card: u64,
     
+    pub tier: u8,
     // reserved space
     pub reserved: [u128; 3]
 }
