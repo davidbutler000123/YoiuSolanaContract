@@ -10,7 +10,7 @@ use instructions::*;
 declare_id!("8FcfefZgB9dcWPcAo6n3tx494SfjZ2dd4gPyv25w2E3d");
 
 #[program]
-pub mod escrow_tier {
+pub mod tier {
     use super::*;
 
     pub fn initialize(

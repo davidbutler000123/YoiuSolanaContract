@@ -2,9 +2,9 @@ import { PublicKey, Keypair, LAMPORTS_PER_SOL } from "@solana/web3.js";
 import * as anchor from "@project-serum/anchor";
 import { airdropSol } from "../utils/utils";
 import { BaseAcct, ATA } from "./accounts";
-import { EscrowTier } from "../../target/types/escrow_tier";
+import { Tier } from "../../target/types/tier";
 const program = anchor.workspace
-  .EscrowTier as anchor.Program<EscrowTier>;
+  .Tier as anchor.Program<Tier>;
 
 export class User {
   public publicKey: PublicKey;

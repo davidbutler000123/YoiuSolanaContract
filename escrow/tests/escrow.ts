@@ -25,7 +25,7 @@ describe("escrow_tier", () => {
   const provider = anchor.AnchorProvider.env();
   anchor.setProvider(provider);
 
-  const program = anchor.workspace.EscrowTier as Program<EscrowTier>;
+  const program = anchor.workspace.Tier as Program<Tier>;
   //const user = (program.provider as anchor.AnchorProvider).wallet
 
   const accts = new Accounts();
