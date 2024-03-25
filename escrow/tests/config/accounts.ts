@@ -17,10 +17,10 @@ import {
   getUserDataKey,
 } from "../utils/keys";
 
-import { Escrow } from "../../target/types/escrow";
+import { EscrowTier } from "../../target/types/escrow_tier";
 import { User } from "./users";
 const program = anchor.workspace
-  .Escrow as anchor.Program<Escrow>;
+  .EscrowTier as anchor.Program<EscrowTier>;
 
 export class BaseAcct {
   public publicKey: PublicKey;

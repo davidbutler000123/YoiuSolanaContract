@@ -9,7 +9,7 @@ import {
     ASSOCIATED_TOKEN_PROGRAM_ID,
   } from "@solana/spl-token";
   import * as anchor from "@project-serum/anchor";
-  import { Escrow } from "../../target/types/escrow";
+  import { EscrowTier } from "../../target/types/escrow_tier";
   import * as Constants from "./constants";
   import * as keys from "./keys";
   import { User } from "../config/users";
@@ -17,7 +17,7 @@ import {
   import { assert } from "chai";
   
   const program = anchor.workspace
-    .Escrow as anchor.Program<Escrow>;
+    .EscrowTier as anchor.Program<EscrowTier>;
   
   export const initializeProgram = async (admin: User, yoiuMint: PublicKey) => {    
     return await program.methods

@@ -2,7 +2,7 @@ import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
 import { expect, assert, use as chaiUse } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
-import { Escrow } from "../target/types/escrow";
+import { EscrowTier } from "../target/types/escrow_tier";
 import {
   PublicKey,
   Keypair,
@@ -20,12 +20,12 @@ import { YOIU_DECIMALS } from "./utils/constants";
 import { emergency_withdraw, helloWorld, initializeProgram, stake, withdraw } from "./utils/instruction";
 chaiUse(chaiAsPromised);
 
-describe("escrow", () => {
+describe("escrow_tier", () => {
   // Configure the client to use the local cluster.
   const provider = anchor.AnchorProvider.env();
   anchor.setProvider(provider);
 
-  const program = anchor.workspace.Escrow as Program<Escrow>;
+  const program = anchor.workspace.EscrowTier as Program<EscrowTier>;
   //const user = (program.provider as anchor.AnchorProvider).wallet
 
   const accts = new Accounts();

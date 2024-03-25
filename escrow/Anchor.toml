@@ -5,7 +5,7 @@ seeds = false
 skip-lint = false
 
 [programs.localnet]
-escrow = "8FcfefZgB9dcWPcAo6n3tx494SfjZ2dd4gPyv25w2E3d"
+escrow_tier = "8FcfefZgB9dcWPcAo6n3tx494SfjZ2dd4gPyv25w2E3d"
 
 [registry]
 url = "http://127.0.0.1"
