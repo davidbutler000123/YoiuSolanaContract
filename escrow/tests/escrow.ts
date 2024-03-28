@@ -2,7 +2,7 @@ import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
 import { expect, assert, use as chaiUse } from 'chai';
 import chaiAsPromised from 'chai-as-promised';
-import { EscrowTier } from "../target/types/escrow_tier";
+import { Tier } from "../target/types/tier";
 import {
   PublicKey,
   Keypair,
@@ -17,7 +17,7 @@ import * as keys from "./utils/keys"
 import { User, Users } from "./config/users";
 import { Accounts } from "./config/accounts";
 import { YOIU_DECIMALS } from "./utils/constants";
-import { emergency_withdraw, helloWorld, initializeProgram, stake, withdraw } from "./utils/instruction";
+import { emergency_withdraw, initializeProgram, stake, withdraw } from "./utils/instruction";
 chaiUse(chaiAsPromised);
 
 describe("escrow_tier", () => {
@@ -61,11 +61,6 @@ describe("escrow_tier", () => {
       1_000_000_000
     );
   })
-
-  // it("Hello World", async () => {
-  //   const tx = await helloWorld(users.admin);
-  // });
-  // return;
 
   it("Is initialized!", async () => {
     const tx = await initializeProgram(

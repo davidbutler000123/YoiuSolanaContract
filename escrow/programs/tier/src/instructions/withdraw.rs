@@ -109,7 +109,7 @@ impl<'info> Withdraw<'info> {
 pub fn handle(ctx: Context<Withdraw>) -> Result<()> {
     let accts = ctx.accounts;
     let amount = accts.user_data.amount;
-    let bump = ctx.bumps.get("global_state").unwrap();    
+    //let bump = *ctx.bumps.get("global_state").unwrap();
 
     // update user data
     // add totally staked amount
@@ -143,7 +143,7 @@ pub fn handle(ctx: Context<Withdraw>) -> Result<()> {
     token::transfer(
         accts
             .withdraw_token_context()
-            .with_signer(&[&[GLOBAL_STATE_SEED.as_ref(), &[*bump]]]),
+            .with_signer(&[&[GLOBAL_STATE_SEED.as_ref()]]),
         amount,
     )?;
     Ok(())
@@ -152,7 +152,7 @@ pub fn handle(ctx: Context<Withdraw>) -> Result<()> {
 pub fn handle_emergency(ctx: Context<Withdraw>) -> Result<()> {
     let accts = ctx.accounts;
     let pre_amount = accts.user_data.amount;
-    let bump = ctx.bumps.get("global_state").unwrap();
+    //let bump = ctx.bumps.get("global_state").unwrap();
 
     msg!("handle_emergency: __1");
 
@@ -161,7 +161,7 @@ pub fn handle_emergency(ctx: Context<Withdraw>) -> Result<()> {
     let _ = token::transfer(
         accts
             .penalty_token_context()
-            .with_signer(&[&[GLOBAL_STATE_SEED.as_ref(), &[*bump]]]),
+            .with_signer(&[&[GLOBAL_STATE_SEED.as_ref()]]),
         fee,
     );
     let amount = pre_amount - fee;
@@ -200,7 +200,7 @@ pub fn handle_emergency(ctx: Context<Withdraw>) -> Result<()> {
     token::transfer(
         accts
             .withdraw_token_context()
-            .with_signer(&[&[GLOBAL_STATE_SEED.as_ref(), &[*bump]]]),
+            .with_signer(&[&[GLOBAL_STATE_SEED.as_ref()]]),
         amount,
     )?;
     Ok(())

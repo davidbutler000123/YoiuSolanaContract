@@ -49,13 +49,10 @@ pub mod tier {
         withdraw::handle_emergency(_ctx)
     }
 
-    pub fn hello_world(
-        _ctx: Context<HelloInitialize>,
-        new_authority: Pubkey,
-        available_tier: u8
-    ) -> Result<()> {        
-        hello_initialize::handle(_ctx, new_authority, available_tier)
+    pub fn tier_validator(
+        _ctx: Context<Validator>
+    ) -> Result<()> {
+        validator::query("https://api.devnet.solana.com")
     }
-
 }
 

@@ -266,21 +266,3 @@ import {
     return await program.account[type].fetchNullable(key);
   };
   
-  export const helloWorld = async (admin: User) => {
-    // console.log('admin = ')
-    // console.log(admin)    
-    const globalKey = await keys.getGlobalStateKey();
-    const tx = await program.methods
-      .helloWorld(
-        admin.publicKey,
-        Constants.DEFAULT_MAX_TIER)
-      .accounts({
-        authority: admin.publicKey,
-        globalState: globalKey,
-        systemProgram: SystemProgram.programId,
-        rent: SYSVAR_RENT_PUBKEY
-      })
-      .signers([admin.keypair])
-      .rpc();
-    console.log("Your transaction signature ", tx)
-  }
